@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name         = "IconSelector"
   s.version      = "0.1"
-  s.summary      = ""
+  s.summary      = "Fancy view to enable the selection of alternate icons."
   s.homepage     = "https://github.com/jellybeansoup/ios-icon-selector"
   s.license      = { :type => 'BSD', :file => 'LICENSE' }
   s.author       = { "Daniel Farrelly" => "daniel@jellystyle.com" }
