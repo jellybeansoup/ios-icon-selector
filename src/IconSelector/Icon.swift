@@ -23,6 +23,7 @@
 //
 
 import Foundation
+import UIKit
 
 public struct Icon {
 
@@ -90,7 +91,7 @@ public struct Icon {
 		}
 
 		if let alternate = iconDictionary["CFBundleAlternateIcons"] as? [String: [String: Any]] {
-			icons.append(contentsOf: alternate.map { Icon(key: $0, dictionary: $1, bundle: bundle) })
+			icons.append(contentsOf: alternate.sorted(by: { $0.key > $1.key }).map { Icon(key: $0, dictionary: $1, bundle: bundle) })
 		}
 
 		return icons

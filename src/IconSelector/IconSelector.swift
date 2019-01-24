@@ -54,8 +54,11 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		self.init(frame: .zero, bundle: bundle)
 	}
 
+
 	required init?(coder aDecoder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
+        	icons = Icon.options(for: Bundle.main)
+        	super.init(coder: aDecoder)
+        	initialize()
 	}
 
 	private func initialize() {
