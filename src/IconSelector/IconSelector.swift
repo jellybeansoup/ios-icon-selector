@@ -64,9 +64,15 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		addSubview(scrollView)
 		scrollView.addSubview(containerView)
 
-		let viewsDictionary: [String: UIView] = ["scrollView": scrollView, "containerView": containerView]
+		scrollView.translatesAutoresizingMaskIntoConstraints = false
+		containerView.translatesAutoresizingMaskIntoConstraints = false
+
+		let viewsDictionary: [String: UIView] = ["rootView": self, "scrollView": scrollView, "containerView": containerView]
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: [], metrics: nil, views: viewsDictionary))
+		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[scrollView]|", options: [], metrics: nil, views: viewsDictionary))
 		scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[containerView]|", options: [], metrics: nil, views: viewsDictionary))
 		scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[containerView]|", options: [], metrics: nil, views: viewsDictionary))
+		scrollView.addConstraint(scrollView.widthAnchor.constraint(equalTo: containerView.widthAnchor))
 
 		scrollView.delegate = self
 		containerView.layoutMargins = .zero
@@ -76,6 +82,8 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		gestureRecognizer.delegate = self
 		gestureRecognizer.addTarget(self, action: #selector(handleGestureRecognizer(_:)))
 		containerView.addGestureRecognizer(gestureRecognizer)
+
+		prepareIconViews()
 	}
 
 	public var selectedIcon: Icon? {
@@ -100,7 +108,10 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 	override public var layoutMargins: UIEdgeInsets {
 		get { return containerView.layoutMargins }
-		set { containerView.layoutMargins = newValue }
+		set {
+			containerView.layoutMargins = newValue
+			setNeedsUpdateConstraints()
+		}
 	}
 
 	// MARK: Tracking interaction
@@ -211,18 +222,9 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 	private var internalConstraints: [NSLayoutConstraint]?
 
 	override public func layoutSubviews() {
-		let first = iconViews.first
-
-		if first == nil || first!.size != iconSize || first!.borderWidth != selectionStrokeWidth {
-			iconViews = icons.map { icon in
-				let view = IconView(icon: icon, size: iconSize, borderWidth: selectionStrokeWidth)
-				view.isSelected = icon.isCurrent
-				return view
-			}
-		}
+		prepareIconViews()
 
 		let width = bounds.size.width - (containerView.layoutMargins.left + containerView.layoutMargins.right)
-
 		minimumSpacing = iconSize / 3
 		iconsPerRow = max(1, Int(floor(width / (iconSize + minimumSpacing))))
 
@@ -231,23 +233,22 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		super.layoutSubviews()
 	}
 
-	override public func updateConstraints() {
-		if let internalConstraints = internalConstraints {
-			NSLayoutConstraint.deactivate(internalConstraints)
+	private func prepareIconViews() {
+		if let first = iconViews.first, first.size == iconSize, first.borderWidth == selectionStrokeWidth {
+			return
 		}
 
-		scrollView.translatesAutoresizingMaskIntoConstraints = false
-		containerView.translatesAutoresizingMaskIntoConstraints = false
-		containerView.subviews.forEach { $0.removeFromSuperview() }
+		iconViews = icons.map { icon in
+			let view = IconView(icon: icon, size: iconSize, borderWidth: selectionStrokeWidth)
+			view.isSelected = icon.isCurrent
+			return view
+		}
 
-		var newConstraints = [
-			scrollView.topAnchor.constraint(equalTo: topAnchor),
-			scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
-			scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			scrollView.trailingAnchor.constraint(equalTo: trailingAnchor),
-			containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-		]
+		setNeedsUpdateConstraints()
+	}
+
+	private func prepareConstraints() {
+		var newConstraints: [NSLayoutConstraint] = []
 
 		if adjustHeightToFitContent {
 			newConstraints.append(contentsOf: [
@@ -262,6 +263,8 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		var previousYAnchor: NSLayoutYAxisAnchor?
 		var spacerXDimension: NSLayoutDimension?
 		var spacerYDimension: NSLayoutDimension?
+
+		containerView.subviews.forEach { $0.removeFromSuperview() }
 
 		for (i, iconView) in iconViews.enumerated() {
 			containerView.addSubview(iconView)
@@ -342,6 +345,14 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 		NSLayoutConstraint.activate(newConstraints)
 		internalConstraints = newConstraints
+	}
+
+	override public func updateConstraints() {
+		if let internalConstraints = internalConstraints {
+			NSLayoutConstraint.deactivate(internalConstraints)
+		}
+
+		prepareConstraints()
 
 		super.updateConstraints()
 	}
