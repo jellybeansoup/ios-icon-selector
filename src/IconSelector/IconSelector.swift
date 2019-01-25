@@ -54,11 +54,10 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		self.init(frame: .zero, bundle: bundle)
 	}
 
-
 	required init?(coder aDecoder: NSCoder) {
-        	icons = Icon.options(for: Bundle.main)
-        	super.init(coder: aDecoder)
-        	initialize()
+		icons = Icon.options(for: Bundle.main)
+		super.init(coder: aDecoder)
+		initialize()
 	}
 
 	private func initialize() {
@@ -368,7 +367,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 			self.size = size
 			self.borderWidth = borderWidth
 
-			super.init(frame: CGRect(x: 0, y: 0, width: size + borderWidth, height: size + borderWidth))
+			super.init(frame: CGRect(x: 0, y: 0, width: size + (borderWidth * 2), height: size + (borderWidth * 2)))
 
 			layoutMargins = UIEdgeInsets(top: borderWidth, left: borderWidth, bottom: borderWidth, right: borderWidth)
 			backgroundColor = UIColor.clear
@@ -381,8 +380,8 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 			imageView.layer.mask = innerShapeLayer
 
 			translatesAutoresizingMaskIntoConstraints = false
-			heightAnchor.constraint(equalToConstant: size + borderWidth).isActive = true
-			widthAnchor.constraint(equalToConstant: size + borderWidth).isActive = true
+			heightAnchor.constraint(equalToConstant: size + (borderWidth * 2)).isActive = true
+			widthAnchor.constraint(equalToConstant: size + (borderWidth * 2)).isActive = true
 		}
 
 		required init?(coder aDecoder: NSCoder) {
