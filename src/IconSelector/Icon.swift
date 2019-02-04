@@ -38,7 +38,7 @@ public struct Icon {
 	public var isCurrent: Bool {
 		let application = UIApplication.shared
 
-		guard #available(iOS 10.3, *), application.supportsAlternateIcons else {
+		guard application.supportsAlternateIcons else {
 			return name == nil
 		}
 

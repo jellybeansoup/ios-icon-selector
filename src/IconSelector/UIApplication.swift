@@ -31,7 +31,7 @@ extension UIApplication {
 		get {
 			let application = UIApplication.shared
 
-			guard #available(iOS 10.3, *), application.supportsAlternateIcons, let name = application.alternateIconName else {
+			guard application.supportsAlternateIcons, let name = application.alternateIconName else {
 				return Icon.default
 			}
 
@@ -45,7 +45,7 @@ extension UIApplication {
 	public func setAlternateIcon(_ icon: Icon?, completionHandler: ((_ error: Swift.Error?) -> Void)? = nil) {
 		let application = UIApplication.shared
 
-		guard #available(iOS 10.3, *), application.supportsAlternateIcons else {
+		guard application.supportsAlternateIcons else {
 			return
 		}
 

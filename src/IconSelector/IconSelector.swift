@@ -149,9 +149,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 			highlighted?.isHighlighted = false
 			iconView.isHighlighted = true
 
-			if #available(iOS 10.0, *) {
-				UISelectionFeedbackGenerator().selectionChanged()
-			}
+			UISelectionFeedbackGenerator().selectionChanged()
 
 		case .possible, .cancelled, .failed:
 			highlighted?.isHighlighted = false
@@ -166,9 +164,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 			selectedIcon = iconView.icon
 			sendActions(for: .valueChanged)
 
-			if #available(iOS 10.0, *) {
-				UISelectionFeedbackGenerator().selectionChanged()
-			}
+			UISelectionFeedbackGenerator().selectionChanged()
 		}
 	}
 
