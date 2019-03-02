@@ -135,30 +135,31 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		let highlighted = iconViews.first(where: { $0.isHighlighted })
 
 		guard isEnabled, bounds.contains(containerView.convert(location, to: self)), let iconView = iconView(at: location) else {
-            highlighted?.isHighlighted = false
-            gestureRecognizer.isEnabled = false
-            gestureRecognizer.isEnabled = true
-
+            		highlighted?.isHighlighted = false
+            		gestureRecognizer.isEnabled = false
+            		gestureRecognizer.isEnabled = true
 			return
 		}
 
 		switch gestureRecognizer.state {
 		case .began, .changed:
-            guard highlighted == nil || highlighted!.icon.name == iconView.icon.name else {
-                highlighted?.isHighlighted = false
-                gestureRecognizer.isEnabled = false
-                gestureRecognizer.isEnabled = true
-                return
-            }
+            		guard highlighted == nil || highlighted!.icon.name == iconView.icon.name else {
+                		highlighted?.isHighlighted = false
+                		gestureRecognizer.isEnabled = false
+                		gestureRecognizer.isEnabled = true
+                		return
+            		}
             
-            guard !iconView.isSelected else {
+            		guard !iconView.isSelected else {
 				return
 			}
 
-			highlighted?.isHighlighted = false
-			iconView.isHighlighted = true
+            		if highlighted?.icon.name != iconView.icon.name {
+                		UISelectionFeedbackGenerator().selectionChanged()
+               	 		highlighted?.isHighlighted = false
+            		}
 
-			UISelectionFeedbackGenerator().selectionChanged()
+			iconView.isHighlighted = true
 
 		case .possible, .cancelled, .failed:
 			highlighted?.isHighlighted = false
