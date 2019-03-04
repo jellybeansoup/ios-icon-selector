@@ -143,23 +143,21 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 		switch gestureRecognizer.state {
 		case .began, .changed:
-            		guard highlighted == nil || highlighted!.icon.name == iconView.icon.name else {
-                		highlighted?.isHighlighted = false
-                		gestureRecognizer.isEnabled = false
-                		gestureRecognizer.isEnabled = true
-                		return
-            		}
+		    guard highlighted == nil || highlighted!.icon.name == iconView.icon.name else {
+			highlighted?.isHighlighted = false
+			gestureRecognizer.isEnabled = false
+			gestureRecognizer.isEnabled = true
+			return
+		    }
             
             		guard !iconView.isSelected else {
 				return
 			}
-
-            		if highlighted?.icon.name != iconView.icon.name {
-                		UISelectionFeedbackGenerator().selectionChanged()
-               	 		highlighted?.isHighlighted = false
-            		}
-
+		if highlighted!.icon.name != iconView.icon.name {
+			highlighted?.isHighlighted = false
 			iconView.isHighlighted = true
+			UISelectionFeedbackGenerator().selectionChanged()
+		    }
 
 		case .possible, .cancelled, .failed:
 			highlighted?.isHighlighted = false
