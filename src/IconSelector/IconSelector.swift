@@ -135,10 +135,9 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		let highlighted = iconViews.first(where: { $0.isHighlighted })
 
 		guard isEnabled, bounds.contains(containerView.convert(location, to: self)), let iconView = iconView(at: location) else {
-            highlighted?.isHighlighted = false
-            gestureRecognizer.isEnabled = false
-            gestureRecognizer.isEnabled = true
-
+            		highlighted?.isHighlighted = false
+            		gestureRecognizer.isEnabled = false
+            		gestureRecognizer.isEnabled = true
 			return
 		}
 
