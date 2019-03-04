@@ -118,7 +118,16 @@ public struct Icon {
 			return nil
 		}
 
-		return UIImage(named: name, in: bundle, compatibleWith: nil)
+		for scale in stride(from: UIScreen.main.scale, through: 1, by: -1) {
+		    if let path = bundle.path(forResource: "\(name)@\(Int(scale))x", ofType: "png") {
+			let url = URL(fileURLWithPath: path)
+			if let data = try? Data(contentsOf: url) {
+			    return UIImage(data: data)
+			}
+		    }
+		}
+
+		return nil
 	}
 
 	public subscript(_ size: CGFloat) -> UIImage? {
@@ -130,16 +139,7 @@ public struct Icon {
 			return nil
 		}
         
-		for scale in [3, 2, 1] {
-		    if let path = bundle.path(forResource: "\(file)@\(scale)x", ofType: "png") {
-			let url = URL(fileURLWithPath: path)
-			if let data = try? Data(contentsOf: url) {
-			    return UIImage(data: data)
-			}
-		    }
-		}
-        
-        	return nil
+        	return self[file]
 	}
 
 }
