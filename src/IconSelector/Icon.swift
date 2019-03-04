@@ -129,8 +129,17 @@ public struct Icon {
 		guard let file = files.first(where: { $0.hasSuffix("\(string)x\(string)") || $0.hasSuffix("-\(string)") }) else {
 			return nil
 		}
-
-		return UIImage(named: file, in: bundle, compatibleWith: nil)
+        
+		for scale in [3, 2, 1] {
+		    if let path = bundle.path(forResource: "\(file)@\(scale)x", ofType: "png") {
+			let url = URL(fileURLWithPath: path)
+			if let data = try? Data(contentsOf: url) {
+			    return UIImage(data: data)
+			}
+		    }
+		}
+        
+        	return nil
 	}
 
 }
