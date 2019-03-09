@@ -23,7 +23,6 @@
 //
 
 import UIKit
-import IconSelector
 
 public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     
