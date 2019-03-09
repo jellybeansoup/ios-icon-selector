@@ -464,12 +464,16 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
         
         // MARK: Selection
         
-        var isSelected: Bool {
-            didSet {
-                backgroundColor = isSelected ? tintColor : UIColor.clear
-                updateMasks()
-            }
-        }
+		var isSelected: Bool {
+			get {
+				return backgroundColor != .clear
+			}
+			set {
+				backgroundColor = newValue ? tintColor : UIColor.clear
+
+				updateMasks()
+			}
+		}
         
         // MARK: Highlighting
         
