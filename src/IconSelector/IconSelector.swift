@@ -25,7 +25,7 @@
 import UIKit
 import IconSelector
 
-public class IconSelector2: UIControl, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     
     public let icons: [Icon]
     
