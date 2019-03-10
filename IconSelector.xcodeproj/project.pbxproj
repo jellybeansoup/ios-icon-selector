@@ -72,6 +72,7 @@
 				A137E74E1DF97AD700AF7BEB /* .travis.yml */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		A1713506185007F800E56C4D /* Products */ = {
 			isa = PBXGroup;

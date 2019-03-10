@@ -138,7 +138,7 @@ public struct Icon {
 		guard let file = files.first(where: { $0.hasSuffix("\(string)x\(string)") || $0.hasSuffix("-\(string)") }) else {
 			return nil
 		}
-        
+
         	return self[file]
 	}
 
@@ -166,3 +166,4 @@ extension Icon: CustomDebugStringConvertible {
 	}
 
 }
+

@@ -29,3 +29,4 @@ extern double IconSelectorVersionNumber;
 
 //! Project version string for Test.
 extern const unsigned char IconSelectorVersionString[];
+
