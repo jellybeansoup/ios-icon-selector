@@ -400,7 +400,6 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
             self.icon = icon
             self.size = size
             self.borderWidth = borderWidth
-            self.isSelected = icon.isCurrent
             
             super.init(frame: CGRect(x: 0, y: 0, width: size + (borderWidth * 2), height: size + (borderWidth * 2)))
             
