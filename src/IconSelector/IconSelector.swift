@@ -175,6 +175,9 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 			sendActions(for: .valueChanged)
 
 			UISelectionFeedbackGenerator().selectionChanged()
+
+		@unknown default:
+			return
 		}
 	}
 

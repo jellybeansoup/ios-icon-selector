@@ -168,7 +168,7 @@
 				TargetAttributes = {
 					A1A787371C7BED9C0095A0EF = {
 						CreatedOnToolsVersion = 7.2.1;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1020;
 					};
 					A1CF09F91DF8D65400D13E21 = {
 						CreatedOnToolsVersion = 8.2;
@@ -372,6 +372,7 @@
 				PRODUCT_NAME = IconSelector;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -405,6 +406,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jellystyle.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = IconSelector;
 				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
