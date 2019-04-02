@@ -180,10 +180,11 @@
 			};
 			buildConfigurationList = A1713500185007F800E56C4D /* Build configuration list for PBXProject "IconSelector" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = A17134FC185007F800E56C4D;
 			productRefGroup = A1713506185007F800E56C4D /* Products */;
