@@ -120,10 +120,10 @@ public struct Icon {
 
 		for scale in stride(from: UIScreen.main.scale, through: 1, by: -1) {
 		    if let path = bundle.path(forResource: "\(name)@\(Int(scale))x", ofType: "png") {
-			let url = URL(fileURLWithPath: path)
-			if let data = try? Data(contentsOf: url) {
-			    return UIImage(data: data)
-			}
+				let url = URL(fileURLWithPath: path)
+				if let data = try? Data(contentsOf: url) {
+					return UIImage(data: data)
+				}
 		    }
 		}
 
@@ -131,7 +131,7 @@ public struct Icon {
 	}
 
 	public subscript(_ size: CGFloat) -> UIImage? {
-		guard let bundle = bundle, let string = Icon.numberFormatter.string(from: NSNumber(value: Double(size))) else {
+		guard let string = Icon.numberFormatter.string(from: NSNumber(value: Double(size))) else {
 			return nil
 		}
 
@@ -139,7 +139,7 @@ public struct Icon {
 			return nil
 		}
 
-        	return self[file]
+        return self[file]
 	}
 
 }
