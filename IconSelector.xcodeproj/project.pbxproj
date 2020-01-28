@@ -39,6 +39,7 @@
 		A1CF09FA1DF8D65400D13E21 /* IconSelectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IconSelectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1CF09FE1DF8D65400D13E21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1E666141C9793700005CE51 /* IconSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconSelector.h; sourceTree = "<group>"; };
+		C961138B23DFD2A600B190E7 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +69,7 @@
 				A1713506185007F800E56C4D /* Products */,
 				A171352E185008F400E56C4D /* LICENSE */,
 				A171352F185008F400E56C4D /* README.md */,
+				C961138B23DFD2A600B190E7 /* Package.swift */,
 				A17135301850090C00E56C4D /* IconSelector.podspec */,
 				A137E74E1DF97AD700AF7BEB /* .travis.yml */,
 			);
