@@ -25,16 +25,26 @@
 import Foundation
 import UIKit
 
+/// An app Icon, as defined in the `Info.plist`
 public struct Icon {
 
+	// MARK: Public Properties
+	
+	/// Gets the name of this icon
+	/// - Note: If the name is `nil`, it is safe to assume
+	///         this is the default icon.
 	public let name: String?
 
+	/// Gets an array of the files associated with this icon
 	public let files: [String]
-
+	
+	/// Gets a flag indicating if this icon has been prerendered or not
 	public let isPrerendered: Bool
-
+	
+	/// The `Bundle` this icon is found in
 	private weak var bundle: Bundle?
-
+	
+	/// Gets a flag indicating whether or not this is the currently selected icon
 	public var isCurrent: Bool {
 		let application = UIApplication.shared
 
@@ -44,7 +54,12 @@ public struct Icon {
 
 		return name == application.alternateIconName
 	}
-
+	
+	/// Creates an `Icon` using the given name and `Bundle`
+	/// - Parameters:
+	///   - named: Name of the icon to create
+	///   - bundle: Optional `Bundle` to find the icon within;
+	///             defaults to the `main` bundle.
 	public init?(named: String, bundle: Bundle = .main) {
 		let icons: [Icon]
 		if bundle == .main {
@@ -62,9 +77,11 @@ public struct Icon {
 	}
 
 	// MARK: Parsing the Info.plist
-
+	
+	/// Gets the `Icon`s for the `main` `Bundle`
 	public static let main = options(for: .main)
-
+	
+	/// Gets the default `Icon`, if possible
 	public static var `default`: Icon? = {
 		let bundle = Bundle.main
 
@@ -78,7 +95,9 @@ public struct Icon {
 
 		return Icon(key: nil, dictionary: primary, bundle: bundle)
 	}()
-
+	
+	/// Gets the `Icon`s defined in the given `Bundle`
+	/// - Parameter bundle: The `Bundle` to load from
 	public static func options(for bundle: Bundle) -> [Icon] {
 		guard let iconDictionary = bundle.infoDictionary?["CFBundleIcons"] as? [String: Any] else {
 			return []
