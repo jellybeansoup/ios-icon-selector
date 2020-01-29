@@ -24,6 +24,11 @@
 
 import UIKit
 
+/// A control that presents available icons and allows selection.
+///
+/// - Note: This control will **not** actually perform any updates
+///         based on the user's selection. It is the responsibility
+///         of the parent `UIViewController` to perform the update.
 public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
 	public let icons: [Icon]
@@ -35,21 +40,33 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 	private var iconViews: [IconView] = []
 
 	private let gestureRecognizer = GestureRecognizer()
-
+	
+	/// Creates an `IconSelector` in the given frame, with the given icons.
+	/// - Parameters:
+	///   - frame: Frame to put this control within
+	///   - icons: Icons to display
 	public init(frame: CGRect, icons: [Icon]) {
 		self.icons = icons
 		super.init(frame: frame)
 		initialize()
 	}
-
+	
+	/// Creates an `IconSelector` in the given frame, with the given `Bundle`.
+	/// - Parameters:
+	///   - frame: Frame to put this control within
+	///   - bundle: `Bundle` to pull icons from; defaults to the `main` bundle.
 	public convenience init(frame: CGRect, bundle: Bundle = .main) {
 		self.init(frame: frame, icons: Icon.options(for: bundle))
 	}
-
+	
+	/// Creates an `IconSelector` with the given icons
+	/// - Parameter icons: Icons to display
 	public convenience init(icons: [Icon]) {
 		self.init(frame: .zero, icons: icons)
 	}
 
+	/// Creates an `IconSelector` for the given `Bundle`
+	/// - Parameter bundle: `Bundle` to load the icons from; defaults to the `main` bundle.
 	public convenience init(bundle: Bundle = .main) {
 		self.init(frame: .zero, bundle: bundle)
 	}
@@ -85,7 +102,8 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 		prepareIconViews()
 	}
-
+	
+	/// Gets the currently selected icon.
 	public var selectedIcon: Icon? {
 		didSet {
 			for iconView in iconViews {
@@ -211,21 +229,26 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 	}
 
 	// MARK: Laying out content
-
+	
+	/// Gets or sets the size of the icons to display
 	public var iconSize: CGFloat = 60.0 {
 		didSet { setNeedsUpdateConstraints() }
 	}
-
+	
+	/// Gets or sets the width of the selection stroke
 	public var selectionStrokeWidth: CGFloat = 2.0 {
 		didSet { setNeedsUpdateConstraints() }
 	}
-
+	
+	/// Gets or sets the stroke color for **un**selected icons
 	public var unselectedStrokeColor: UIColor? {
 		didSet {
 			iconViews.forEach({ $0.unselectedStrokeColor = unselectedStrokeColor})
 		}
 	}
-
+	
+	/// Gets or sets a flag to have this control adjust
+	/// its height to fit the content it is displaying.
 	public var adjustHeightToFitContent: Bool = false {
 		didSet { setNeedsUpdateConstraints() }
 	}

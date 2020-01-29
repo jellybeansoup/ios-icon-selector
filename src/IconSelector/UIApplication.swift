@@ -26,7 +26,8 @@ import Foundation
 import UIKit
 
 extension UIApplication {
-
+	
+	/// Gets or sets an alternate icon to use
 	public var alternateIcon: Icon? {
 		get {
 			let application = UIApplication.shared
@@ -41,7 +42,11 @@ extension UIApplication {
 			setAlternateIcon(newValue, completionHandler: nil)
 		}
 	}
-
+	
+	/// Sets a new alternate icon
+	/// - Parameters:
+	///   - icon: Icon to set; use `nil` to restore the default
+	///   - completionHandler: optional completion handler
 	public func setAlternateIcon(_ icon: Icon?, completionHandler: ((_ error: Swift.Error?) -> Void)? = nil) {
 		let application = UIApplication.shared
 
