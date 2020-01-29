@@ -24,11 +24,16 @@
 
 import UIKit
 
-/// A control that presents available icons and allows selection.
-///
-/// - Note: This control will **not** actually perform any updates
-///         based on the user's selection. It is the responsibility
-///         of the parent `UIViewController` to perform the update.
+/** A control that presents available icons and allows selection.
+
+	This control will **not** actually perform any updates
+    based on the user's selection. It is the responsibility
+	of the parent `UIViewController` to perform the update.
+    There are two methods to perform the actual updates.
+    - Read the `selectedIcon` upon the user indicating they're done
+    - Use `addTarget(_:action:for:)` to enroll in updates for the
+      `.valueChanged` event.
+*/
 public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
 	public let icons: [Icon]
@@ -49,6 +54,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		self.icons = icons
 		super.init(frame: frame)
 		initialize()
+		self.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
 	}
 	
 	/// Creates an `IconSelector` in the given frame, with the given `Bundle`.
