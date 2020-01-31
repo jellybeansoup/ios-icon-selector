@@ -54,7 +54,6 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		self.icons = icons
 		super.init(frame: frame)
 		initialize()
-		self.addTarget(<#T##target: Any?##Any?#>, action: <#T##Selector#>, for: <#T##UIControl.Event#>)
 	}
 	
 	/// Creates an `IconSelector` in the given frame, with the given `Bundle`.
