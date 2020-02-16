@@ -78,7 +78,7 @@ class IconView: UIView {
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(imageView)
 
-		label.text = icon.name
+		label.text = icon.localizedName ?? icon.name
 		label.font = UIFont.systemFont(ofSize: 12)
 		label.textAlignment = .center
 		label.translatesAutoresizingMaskIntoConstraints = false
