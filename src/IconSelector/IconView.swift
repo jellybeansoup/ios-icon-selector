@@ -79,10 +79,11 @@ class IconView: UIView {
 		borderView.addSubview(imageView)
 
 		label.text = icon.localizedName ?? icon.name
-		label.font = UIFont.systemFont(ofSize: 12)
+		label.font = UIFont.systemFont(ofSize: labelFontSize(for: traitCollection.preferredContentSizeCategory))
 		label.textAlignment = .center
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.allowsDefaultTighteningForTruncation = true
+		label.adjustsFontForContentSizeCategory = false
 		addSubview(label)
 
 		borderLayer.lineWidth = 1.0 / UIScreen.main.scale
@@ -120,6 +121,32 @@ class IconView: UIView {
 		super.layoutSubviews()
 
 		updateMasks()
+	}
+
+	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+		super.traitCollectionDidChange(previousTraitCollection)
+
+		if traitCollection.preferredContentSizeCategory != previousTraitCollection?.preferredContentSizeCategory {
+			label.font = label.font?.withSize(labelFontSize(for: traitCollection.preferredContentSizeCategory))
+		}
+	}
+
+	private func labelFontSize(for contentSizeCategory: UIContentSizeCategory) -> CGFloat {
+		switch contentSizeCategory {
+		case .extraSmall: return 11.0
+		case .small: return 11.5
+		case .medium: return 12.0
+		case .large: return 12.5
+		case .extraLarge: return 13.0
+		case .extraExtraLarge: return 13.5
+		case .extraExtraExtraLarge: return 14.0
+		case .accessibilityMedium: return 14.5
+		case .accessibilityLarge: return 15.0
+		case .accessibilityExtraLarge: return 15.5
+		case .accessibilityExtraExtraLarge: return 16.0
+		case .accessibilityExtraExtraExtraLarge: return 16.5
+		default: return 12.0
+		}
 	}
 
 	private func updateMasks() {
