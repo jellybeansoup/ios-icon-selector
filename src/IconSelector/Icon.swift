@@ -35,6 +35,11 @@ public struct Icon {
 	///         this is the default icon.
 	public let name: String?
 
+	/// The user-visible display name for the icon, which is displayed under the icon (and used as the spoken
+	/// accessibility text) if `IconSelector.shouldDisplayLabels` is set to `true`.
+	/// - Note: The default value of this property reflects the Info.plist value with the key `CFBundleIconName`.
+	public var localizedName: String?
+
 	/// Gets an array of the files associated with this icon
 	public let files: [String]
 	
@@ -118,6 +123,7 @@ public struct Icon {
 
 	private init(key: String?, dictionary: [String: Any], bundle: Bundle) {
 		self.name = key
+		self.localizedName = dictionary["CFBundleIconName"] as? String
 		self.files = dictionary["CFBundleIconFiles"] as? [String] ?? []
 		self.isPrerendered = dictionary["UIPrerenderedIcon"] as? Bool ?? false
 		self.bundle = bundle
@@ -159,6 +165,16 @@ public struct Icon {
 		}
 
         return self[file]
+	}
+
+	// MARK: Making copies
+
+	/// Creates a copy of the receiver with the given `localizedName`.
+	/// - Parameter localizedName: The user-visible display name to give the icon.
+	public func with(localizedName: String) -> Icon {
+		var icon = self
+		icon.localizedName = localizedName
+		return icon
 	}
 
 }
