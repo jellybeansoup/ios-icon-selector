@@ -64,6 +64,9 @@ class IconView: UIView {
 		clipsToBounds = false
 		layoutMargins = UIEdgeInsets(top: borderWidth, left: borderWidth, bottom: borderWidth, right: borderWidth)
 		translatesAutoresizingMaskIntoConstraints = false
+		accessibilityLabel = icon.localizedName ?? icon.name
+		accessibilityTraits = .button
+		isAccessibilityElement = true
 
 		borderView.clipsToBounds = true
 		borderView.layer.masksToBounds = true
@@ -187,10 +190,17 @@ class IconView: UIView {
 
 	var isSelected: Bool {
 		get {
-			return borderView.backgroundColor != .clear
+			return accessibilityTraits.contains(.selected)
 		}
 		set {
-			borderView.backgroundColor = newValue ? tintColor : UIColor.clear
+			if newValue {
+				borderView.backgroundColor = tintColor
+				accessibilityTraits.insert(.selected)
+			}
+			else {
+				borderView.backgroundColor = UIColor.clear
+				accessibilityTraits.remove(.selected)
+			}
 
 			updateMasks()
 		}

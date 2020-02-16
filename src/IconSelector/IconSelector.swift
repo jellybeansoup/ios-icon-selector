@@ -126,6 +126,15 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		didSet {
 			containerView.alpha = isEnabled ? 1 : 0.5
 			containerView.isUserInteractionEnabled = isEnabled
+
+			iconViews.forEach {
+				if isEnabled {
+					$0.accessibilityTraits.remove(.notEnabled)
+				}
+				else {
+					$0.accessibilityTraits.insert(.notEnabled)
+				}
+			}
 		}
 	}
 
