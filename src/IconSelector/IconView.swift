@@ -76,7 +76,7 @@ class IconView: UIView {
 		imageView.contentMode = .scaleAspectFit
 		imageView.layer.masksToBounds = true
 		imageView.translatesAutoresizingMaskIntoConstraints = false
-		addSubview(imageView)
+		borderView.addSubview(imageView)
 
 		label.text = icon.localizedName ?? icon.name
 		label.font = UIFont.systemFont(ofSize: 12)
