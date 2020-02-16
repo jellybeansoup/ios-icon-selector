@@ -244,14 +244,17 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 	public var selectionStrokeWidth: CGFloat = 2.0 {
 		didSet { setNeedsUpdateConstraints() }
 	}
-	
+
 	/// Gets or sets the stroke color for **un**selected icons
 	public var unselectedStrokeColor: UIColor? {
-		didSet {
-			iconViews.forEach({ $0.unselectedStrokeColor = unselectedStrokeColor})
-		}
+		didSet { iconViews.forEach({ $0.unselectedStrokeColor = unselectedStrokeColor}) }
 	}
-	
+
+	/// Flag to indicate if icon labels should be displayed. Defaults to `false`.
+	public var shouldDisplayLabels: Bool = false {
+		didSet { iconViews.forEach({ $0.shouldDisplayLabel = shouldDisplayLabels}) }
+	}
+
 	/// Gets or sets a flag to have this control adjust
 	/// its height to fit the content it is displaying.
 	public var adjustHeightToFitContent: Bool = false {
@@ -284,6 +287,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		iconViews = icons.map { icon in
 			let view = IconView(icon: icon, size: iconSize, borderWidth: selectionStrokeWidth)
 			view.unselectedStrokeColor = unselectedStrokeColor
+			view.shouldDisplayLabel = shouldDisplayLabels
 			view.isSelected = icon.isCurrent
 			return view
 		}
@@ -302,7 +306,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		}
 
 		var currentXAnchors: [Int: NSLayoutXAxisAnchor] = [:]
-		var currentYAnchor: NSLayoutYAxisAnchor?
+		var currentYAnchors: (top: NSLayoutYAxisAnchor, bottom: NSLayoutYAxisAnchor)?
 		var previousXAnchor: NSLayoutXAxisAnchor?
 		var previousYAnchor: NSLayoutYAxisAnchor?
 		var spacerXDimension: NSLayoutDimension?
@@ -313,11 +317,16 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		for (i, iconView) in iconViews.enumerated() {
 			containerView.addSubview(iconView)
 
-			if let anchor = currentYAnchor {
-				newConstraints.append(iconView.topAnchor.constraint(equalTo: anchor))
+			if let (topAnchor, bottomAnchor) = currentYAnchors {
+				// Vertical constraints for subsequent (_not_ first/leading) icons within the current row
+
+				newConstraints.append(iconView.topAnchor.constraint(equalTo: topAnchor))
+				newConstraints.append(iconView.bottomAnchor.constraint(equalTo: bottomAnchor))
 			}
 			else if let anchor = previousYAnchor {
-				let spacer = UIView()
+				// Vertical constraints for first (leading) icon in subsequent (_not_ first/top) rows
+
+				let spacer = UIView() // Vertical spacer
 				spacer.alpha = 0
 				spacer.translatesAutoresizingMaskIntoConstraints = false
 				containerView.addSubview(spacer)
@@ -335,21 +344,27 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 					spacerYDimension = spacer.heightAnchor
 				}
 
-				currentYAnchor = spacer.bottomAnchor
+				currentYAnchors = (top: spacer.bottomAnchor, bottom: iconView.bottomAnchor)
 				previousYAnchor = iconView.bottomAnchor
 			}
 			else {
+				// Vertical constraints for first (leading) icon in first (top) row
+
 				newConstraints.append(iconView.topAnchor.constraint(equalTo: containerView.layoutMarginsGuide.topAnchor))
 
-				currentYAnchor = iconView.topAnchor
+				currentYAnchors = (top: iconView.topAnchor, bottom: iconView.bottomAnchor)
 				previousYAnchor = iconView.bottomAnchor
 			}
 
 			if let anchor = currentXAnchors[i % iconsPerRow] {
+				// Horizontal constraints for subsequent (_not_ first/top) icons within the current column
+
 				newConstraints.append(iconView.leadingAnchor.constraint(equalTo: anchor))
 			}
 			else if let anchor = previousXAnchor {
-				let spacer = UIView()
+				// Horizontal constraints for for first (top) icon in subsequent (_not_ first/leading) columns
+
+				let spacer = UIView() // Horizontal spacer
 				spacer.alpha = 0
 				spacer.translatesAutoresizingMaskIntoConstraints = false
 				containerView.addSubview(spacer)
@@ -370,6 +385,8 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 				currentXAnchors[i] = spacer.trailingAnchor
 			}
 			else {
+				// Vertical constraints for first (top) icon in first (leading) column
+
 				newConstraints.append(iconView.leadingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.leadingAnchor))
 			}
 
@@ -381,7 +398,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 			if i % iconsPerRow == iconsPerRow - 1 { // Last in row
 				previousXAnchor = nil
-				currentYAnchor = nil
+				currentYAnchors = nil
 
 				newConstraints.append(iconView.trailingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.trailingAnchor))
 			}
@@ -399,144 +416,6 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		prepareConstraints()
 
 		super.updateConstraints()
-	}
-
-	// MARK: Fitting dimensions to size
-
-	class IconView: UIView {
-
-		let icon: Icon
-
-		let size: CGFloat
-
-		let borderWidth: CGFloat
-
-		var unselectedStrokeColor: UIColor? {
-			didSet {
-				updateMasks()
-			}
-		}
-
-		internal let imageView = UIImageView()
-
-		private var borderLayer = CAShapeLayer()
-
-		private var outerShapeLayer = CAShapeLayer()
-
-		private var innerShapeLayer = CAShapeLayer()
-
-		private var strokeWidth: CGFloat = 0.0
-
-		init(icon: Icon, size: CGFloat, borderWidth: CGFloat) {
-			self.icon = icon
-			self.size = size
-			self.borderWidth = borderWidth
-
-			super.init(frame: CGRect(x: 0, y: 0, width: size + (borderWidth * 2), height: size + (borderWidth * 2)))
-
-			layoutMargins = UIEdgeInsets(top: borderWidth, left: borderWidth, bottom: borderWidth, right: borderWidth)
-			backgroundColor = UIColor.clear
-			clipsToBounds = false
-
-			imageView.image = icon[size]
-			imageView.clipsToBounds = true
-			imageView.contentMode = .scaleAspectFit
-			imageView.layer.masksToBounds = true
-			addSubview(imageView)
-			imageView.layer.mask = innerShapeLayer
-
-			borderLayer.lineWidth = 1.0 / UIScreen.main.scale
-			borderLayer.fillColor = UIColor.clear.cgColor
-
-			imageView.layer.addSublayer(borderLayer)
-
-			layer.mask = outerShapeLayer
-
-			translatesAutoresizingMaskIntoConstraints = false
-			heightAnchor.constraint(equalToConstant: size + (borderWidth * 2)).isActive = true
-			widthAnchor.constraint(equalToConstant: size + (borderWidth * 2)).isActive = true
-		}
-
-		required init?(coder aDecoder: NSCoder) {
-			fatalError("init(coder:) has not been implemented")
-		}
-
-		override func layoutSubviews() {
-			super.layoutSubviews()
-
-			updateMasks()
-
-			imageView.frame = bounds.inset(by: layoutMargins)
-			highlightedView?.frame = bounds
-
-			borderLayer.frame = imageView.bounds
-		}
-
-		private func updateMasks() {
-			let outerFrame =  CGRect(origin: .zero, size: bounds.size)
-			let innerFrame = CGRect(origin: .zero, size: bounds.inset(by: layoutMargins).size)
-
-			borderLayer.path = innerShapeLayer.path
-			borderLayer.strokeColor = isSelected ? UIColor.clear.cgColor : unselectedStrokeColor?.cgColor ?? UIColor.clear.cgColor
-
-			outerShapeLayer.path = UIBezierPath(roundedRect: outerFrame, cornerRadius: outerFrame.size.width * 0.225).cgPath
-			innerShapeLayer.path = UIBezierPath(roundedRect: innerFrame, cornerRadius: innerFrame.size.width * 0.225).cgPath
-		}
-
-		override func tintColorDidChange() {
-			guard isSelected else {
-				return
-			}
-
-			backgroundColor = tintColor
-		}
-
-		// MARK: Selection
-
-		var isSelected: Bool {
-			get {
-				return backgroundColor != .clear
-			}
-			set {
-				backgroundColor = newValue ? tintColor : UIColor.clear
-
-				updateMasks()
-			}
-		}
-
-		// MARK: Highlighting
-
-		var isHighlighted: Bool {
-			get { return highlightedView != nil }
-			set {
-				if newValue {
-					let view = HighlightedView(frame: bounds.insetBy(dx: -borderWidth, dy: -borderWidth))
-					addSubview(view)
-					highlightedView = view
-				}
-				else {
-					highlightedView?.removeFromSuperview()
-					highlightedView = nil
-				}
-			}
-		}
-
-		private var highlightedView: HighlightedView?
-
-		private class HighlightedView: UIView {
-
-			override init(frame: CGRect) {
-				super.init(frame: frame)
-
-				backgroundColor = UIColor(white: 0, alpha: 0.6)
-			}
-
-			required init?(coder aDecoder: NSCoder) {
-				fatalError("init(coder:) has not been implemented")
-			}
-
-		}
-
 	}
 
 }
