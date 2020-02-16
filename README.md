@@ -6,6 +6,30 @@ A drop-in UI component to allow easy selection of alternate icons on iOS.
 
 - Compatible with iOS 10.3 and above.
 
+## Installation
+
+### [Swift Package Manager](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app) (for Apple platforms only)
+
+In Xcode, select _File_ > _Swift Packages_ > _Add Package Dependency_ and enter the repository URL:
+
+```
+https://github.com/jellybeansoup/ios-icon-selector
+```
+
+### [Carthage](https://github.com/Carthage/Carthage)
+
+Add the following line to your `Podfile`:
+
+```
+github "jellybeansoup/ios-icon-selector"
+```
+
+## Documentation
+
+You can [find documentation for this project here](https://jellybeansoup.github.io/ios-icon-selector/). This documentation is automatically generated with [jazzy](https://github.com/realm/jazzy) from a [GitHub Action](https://jellybeansoup.github.io/ios-icon-selector/blob/master/.github/workflows/documentation.yml) and hosted with [GitHub Pages](https://pages.github.com/).
+
+To generate documentation locally, run `make documentation` or `sh ./scripts/documentation.sh` from the repo's root directory. The output will be generated in the docs folder, and should _not_ be included with commits (as the online documentation is automatically generated and updated).
+
 ## Get in Touch
 
 If you have questions, I can be found on [Twitter](https://twitter.com/jellybeansoup), or you can get in touch via [email](https://jellystyle.com/contact).
