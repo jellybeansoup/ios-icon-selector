@@ -2,14 +2,14 @@
   "warnings": [
     {
       "file": "/Users/runner/runners/2.164.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/Icon.swift",
-      "line": 135,
+      "line": 141,
       "symbol": "Icon.subscript(_:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.164.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/Icon.swift",
-      "line": 152,
+      "line": 158,
       "symbol": "Icon.subscript(_:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
       "warning": "undocumented"
@@ -30,35 +30,35 @@
     },
     {
       "file": "/Users/runner/runners/2.164.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 132,
+      "line": 141,
       "symbol": "IconSelector.layoutMargins",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.164.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 227,
+      "line": 236,
       "symbol": "IconSelector.gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.164.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 232,
+      "line": 241,
       "symbol": "IconSelector.scrollViewWillBeginDragging(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.164.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 267,
+      "line": 297,
       "symbol": "IconSelector.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.164.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 394,
+      "line": 492,
       "symbol": "IconSelector.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

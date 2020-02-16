@@ -584,6 +584,76 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:12IconSelectorAAC19shouldDisplayLabelsSbvp"></a>
+                    <a name="//apple_ref/swift/Property/shouldDisplayLabels" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12IconSelectorAAC19shouldDisplayLabelsSbvp">shouldDisplayLabels</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Flag to indicate if icon labels should be displayed. Defaults to <code>false</code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">shouldDisplayLabels</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:12IconSelectorAAC21anchorHorizontalEdgesSbvp"></a>
+                    <a name="//apple_ref/swift/Property/anchorHorizontalEdges" class="dashAnchor"></a>
+                    <a class="token" href="#/s:12IconSelectorAAC21anchorHorizontalEdgesSbvp">anchorHorizontalEdges</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Flag to indicate if the icons are lined up with the leading and trailing edges of the <code>IconSelector</code> view.</p>
+
+<p>When <code>true</code>, the spacing between the horizontal edges of the parent view is fixed, pinning the respective edges
+of the icons within the first and last columns to the <code>IconSelector</code> view. This is useful when lining the
+horizontal edges of the <code>IconSelector</code> up with other edges, such as displaying within a table view, as the
+visual edges are fixed.</p>
+
+<p>When <code>false</code> the spacing between the horizontal edges of the parent view is flexible, and sized to match the
+space between the icons themselves. This is useful when pinning the <code>IconSelector</code> itself to the edges of the
+device&rsquo;s screen, as it ensures even spacing for the icons, replicating the look of the iOS springboard layout.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The width of icon labels (if enabled) cannot exceed the width of the icons themselves if this setting is
+enabled, and will be truncated as required. If edges are not anchored, icon labels can fill the available space
+as needed, similar to how they would be displayed on the iOS springboard.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">anchorHorizontalEdges</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:12IconSelectorAAC24adjustHeightToFitContentSbvp"></a>
                     <a name="//apple_ref/swift/Property/adjustHeightToFitContent" class="dashAnchor"></a>
                     <a class="token" href="#/s:12IconSelectorAAC24adjustHeightToFitContentSbvp">adjustHeightToFitContent</a>
