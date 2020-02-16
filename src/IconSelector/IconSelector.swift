@@ -255,6 +255,24 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		didSet { iconViews.forEach({ $0.shouldDisplayLabel = shouldDisplayLabels}) }
 	}
 
+	/// Flag to indicate if the icons are lined up with the leading and trailing edges of the `IconSelector` view.
+	///
+	/// When `true`, the spacing between the horizontal edges of the parent view is fixed, pinning the respective edges
+	/// of the icons within the first and last columns to the `IconSelector` view. This is useful when lining the
+	/// horizontal edges of the `IconSelector` up with other edges, such as displaying within a table view, as the
+	/// visual edges are fixed.
+	///
+	/// When `false` the spacing between the horizontal edges of the parent view is flexible, and sized to match the
+	/// space between the icons themselves. This is useful when pinning the `IconSelector` itself to the edges of the
+	/// device's screen, as it ensures even spacing for the icons, replicating the look of the iOS springboard layout.
+	///
+	/// - Note: The width of icon labels (if enabled) cannot exceed the width of the icons themselves if this setting is
+	/// enabled, and will be truncated as required. If edges are not anchored, icon labels can fill the available space
+	/// as needed, similar to how they would be displayed on the iOS springboard.
+	public var anchorHorizontalEdges: Bool = true {
+		didSet { setNeedsUpdateConstraints() }
+	}
+
 	/// Gets or sets a flag to have this control adjust
 	/// its height to fit the content it is displaying.
 	public var adjustHeightToFitContent: Bool = false {
@@ -302,7 +320,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 			newConstraints.append(contentsOf: [
 				containerView.topAnchor.constraint(equalTo: topAnchor),
 				containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
-				])
+			])
 		}
 
 		var currentXAnchors: [Int: NSLayoutXAxisAnchor] = [:]
@@ -311,8 +329,50 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		var previousYAnchor: NSLayoutYAxisAnchor?
 		var spacerXDimension: NSLayoutDimension?
 		var spacerYDimension: NSLayoutDimension?
+		var iconXDimension: NSLayoutDimension?
 
 		containerView.subviews.forEach { $0.removeFromSuperview() }
+
+		let edgeXAnchors: (leading: NSLayoutXAxisAnchor, trailing: NSLayoutXAxisAnchor)
+		if anchorHorizontalEdges {
+			edgeXAnchors = (containerView.layoutMarginsGuide.leadingAnchor, containerView.layoutMarginsGuide.trailingAnchor)
+		}
+		else if let firstIconView = iconViews.first {
+			let widthSpacer = UIView()
+			widthSpacer.alpha = 0
+			widthSpacer.translatesAutoresizingMaskIntoConstraints = false
+			containerView.addSubview(widthSpacer)
+
+			let leadingSpacer = UIView()
+			leadingSpacer.alpha = 0
+			leadingSpacer.translatesAutoresizingMaskIntoConstraints = false
+			containerView.addSubview(leadingSpacer)
+
+			let trailingSpacer = UIView()
+			trailingSpacer.alpha = 0
+			trailingSpacer.translatesAutoresizingMaskIntoConstraints = false
+			containerView.addSubview(trailingSpacer)
+
+			newConstraints.append(widthSpacer.leadingAnchor.constraint(equalTo: firstIconView.leadingAnchor))
+			newConstraints.append(widthSpacer.trailingAnchor.constraint(equalTo: firstIconView.imageView.leadingAnchor))
+			newConstraints.append(widthSpacer.topAnchor.constraint(equalTo: containerView.layoutMarginsGuide.topAnchor))
+			newConstraints.append(widthSpacer.heightAnchor.constraint(equalToConstant: 0))
+
+			newConstraints.append(leadingSpacer.leadingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.leadingAnchor))
+			newConstraints.append(leadingSpacer.topAnchor.constraint(equalTo: containerView.layoutMarginsGuide.topAnchor))
+			newConstraints.append(leadingSpacer.heightAnchor.constraint(equalToConstant: 0))
+			newConstraints.append(leadingSpacer.widthAnchor.constraint(equalTo: widthSpacer.widthAnchor))
+
+			newConstraints.append(trailingSpacer.trailingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.trailingAnchor))
+			newConstraints.append(trailingSpacer.topAnchor.constraint(equalTo: containerView.layoutMarginsGuide.topAnchor))
+			newConstraints.append(trailingSpacer.heightAnchor.constraint(equalToConstant: 0))
+			newConstraints.append(trailingSpacer.widthAnchor.constraint(equalTo: widthSpacer.widthAnchor))
+
+			edgeXAnchors = (leadingSpacer.trailingAnchor, trailingSpacer.leadingAnchor)
+		}
+		else {
+			return // No need to continue, we don't have any icons anyway.
+		}
 
 		for (i, iconView) in iconViews.enumerated() {
 			containerView.addSubview(iconView)
@@ -371,9 +431,15 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 				newConstraints.append(spacer.leadingAnchor.constraint(equalTo: anchor))
 				newConstraints.append(spacer.topAnchor.constraint(equalTo: containerView.layoutMarginsGuide.topAnchor))
-				newConstraints.append(spacer.widthAnchor.constraint(greaterThanOrEqualToConstant: minimumSpacing))
 				newConstraints.append(spacer.heightAnchor.constraint(equalToConstant: 0))
 				newConstraints.append(iconView.leadingAnchor.constraint(equalTo: spacer.trailingAnchor))
+
+				if anchorHorizontalEdges {
+					newConstraints.append(spacer.widthAnchor.constraint(greaterThanOrEqualToConstant: minimumSpacing))
+				}
+				else {
+					newConstraints.append(spacer.widthAnchor.constraint(equalToConstant: 0))
+				}
 
 				if let spacerXDimension = spacerXDimension {
 					newConstraints.append(spacer.widthAnchor.constraint(equalTo: spacerXDimension))
@@ -387,10 +453,16 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 			else {
 				// Vertical constraints for first (top) icon in first (leading) column
 
-				newConstraints.append(iconView.leadingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.leadingAnchor))
+				newConstraints.append(iconView.leadingAnchor.constraint(equalTo: edgeXAnchors.leading))
+
+				iconXDimension = iconView.widthAnchor
 			}
 
 			previousXAnchor = iconView.trailingAnchor
+
+			if let dimension = iconXDimension { // Match widths to first icon
+				newConstraints.append(iconView.widthAnchor.constraint(equalTo: dimension))
+			}
 
 			if i == iconViews.count - 1 { // Last in array
 				newConstraints.append(iconView.bottomAnchor.constraint(equalTo: containerView.layoutMarginsGuide.bottomAnchor))
@@ -400,7 +472,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 				previousXAnchor = nil
 				currentYAnchors = nil
 
-				newConstraints.append(iconView.trailingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.trailingAnchor))
+				newConstraints.append(iconView.trailingAnchor.constraint(equalTo: edgeXAnchors.trailing))
 			}
 		}
 
