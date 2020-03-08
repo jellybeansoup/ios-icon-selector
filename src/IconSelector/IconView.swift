@@ -118,6 +118,8 @@ class IconView: UIView {
 		label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true
 		label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true
 		label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+		setNeedsLayout()
 	}
 
 	override func layoutSubviews() {
