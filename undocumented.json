@@ -58,7 +58,7 @@
     },
     {
       "file": "/Users/runner/runners/2.165.2/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 492,
+      "line": 495,
       "symbol": "IconSelector.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
