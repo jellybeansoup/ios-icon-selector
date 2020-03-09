@@ -75,6 +75,7 @@ class IconView: UIView {
 		addSubview(borderView)
 
 		imageView.image = icon[size]
+		imageView.bounds.size = CGSize(width: size, height: size)
 		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleAspectFit
 		imageView.layer.masksToBounds = true
@@ -120,6 +121,7 @@ class IconView: UIView {
 		label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
 		setNeedsLayout()
+		layoutIfNeeded()
 	}
 
 	override func layoutSubviews() {
