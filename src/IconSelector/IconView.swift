@@ -34,21 +34,15 @@ class IconView: UIView {
 
 	var unselectedStrokeColor: UIColor? {
 		didSet {
-			updateMasks()
+			updateUnselectedBorder()
 		}
 	}
 
-	internal let borderView = UIView()
+	internal let borderView: UIView = BorderView()
 
-	internal let imageView = UIImageView()
+	internal let imageView: UIImageView = ImageView()
 
 	internal let label = UILabel()
-
-	private var borderLayer = CAShapeLayer()
-
-	private var outerShapeLayer = CAShapeLayer()
-
-	private var innerShapeLayer = CAShapeLayer()
 
 	private var strokeWidth: CGFloat = 0.0
 
@@ -75,7 +69,6 @@ class IconView: UIView {
 		addSubview(borderView)
 
 		imageView.image = icon[size]
-		imageView.bounds.size = CGSize(width: size, height: size)
 		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleAspectFit
 		imageView.layer.masksToBounds = true
@@ -90,12 +83,8 @@ class IconView: UIView {
 		label.adjustsFontForContentSizeCategory = false
 		addSubview(label)
 
-		borderLayer.lineWidth = 1.0 / UIScreen.main.scale
-		borderLayer.fillColor = UIColor.clear.cgColor
-
-		imageView.layer.addSublayer(borderLayer)
-
 		prepareConstraints()
+		updateUnselectedBorder()
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -119,15 +108,12 @@ class IconView: UIView {
 		label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true
 		label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true
 		label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-
-		setNeedsLayout()
-		layoutIfNeeded()
 	}
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		updateMasks()
+		updateUnselectedBorder()
 	}
 
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -156,18 +142,13 @@ class IconView: UIView {
 		}
 	}
 
-	private func updateMasks() {
-		let outerFrame =  CGRect(origin: .zero, size: borderView.bounds.size)
-		let innerFrame = CGRect(origin: .zero, size: imageView.bounds.size)
-
-		borderLayer.path = innerShapeLayer.path
-		borderLayer.strokeColor = isSelected ? UIColor.clear.cgColor : unselectedStrokeColor?.cgColor ?? UIColor.clear.cgColor
-
-		outerShapeLayer.path = UIBezierPath(roundedRect: outerFrame, cornerRadius: outerFrame.size.width * 0.225).cgPath
-		borderView.layer.mask = outerShapeLayer
-
-		innerShapeLayer.path = UIBezierPath(roundedRect: innerFrame, cornerRadius: innerFrame.size.width * 0.225).cgPath
-		imageView.layer.mask = innerShapeLayer
+	private func updateUnselectedBorder() {
+		if !isSelected, let color = unselectedStrokeColor {
+			(imageView as? ImageView)?.borderLayer.strokeColor = color.cgColor
+		}
+		else {
+			(imageView as? ImageView)?.borderLayer.strokeColor = UIColor.clear.cgColor
+		}
 	}
 
 	override func tintColorDidChange() {
@@ -176,6 +157,45 @@ class IconView: UIView {
 		}
 
 		borderView.backgroundColor = tintColor
+	}
+
+	private class BorderView: UIView {
+
+		private var shapeMask = CAShapeLayer()
+
+		override func layoutSubviews() {
+			super.layoutSubviews()
+
+			shapeMask.path = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.size.width * 0.225).cgPath
+			layer.mask = shapeMask
+		}
+
+	}
+
+	private class ImageView: UIImageView {
+
+		private var shapeMask = CAShapeLayer()
+
+		var borderLayer: CAShapeLayer = {
+			let layer = CAShapeLayer()
+			layer.strokeColor = UIColor.clear.cgColor
+			layer.fillColor = UIColor.clear.cgColor
+			return layer
+		}()
+
+		override func layoutSubviews() {
+			super.layoutSubviews()
+
+			let path = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.size.width * 0.225)
+
+			borderLayer.lineWidth = 2.0 / (window?.screen ?? .main).scale
+			borderLayer.path = path.cgPath
+			layer.addSublayer(borderLayer)
+
+			shapeMask.path = path.cgPath
+			layer.mask = shapeMask
+		}
+
 	}
 
 	// MARK: Displaying labels
@@ -206,7 +226,7 @@ class IconView: UIView {
 				accessibilityTraits.remove(.selected)
 			}
 
-			updateMasks()
+			updateUnselectedBorder()
 		}
 	}
 
