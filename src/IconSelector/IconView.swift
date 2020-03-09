@@ -96,18 +96,28 @@ class IconView: UIView {
 		borderView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor).isActive = true
 		borderView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor).isActive = true
 		borderView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-		borderView.bottomAnchor.constraint(equalTo: label.topAnchor, constant: -5).isActive = true
 
-		imageView.widthAnchor.constraint(equalToConstant: size).isActive = true
-		imageView.heightAnchor.constraint(equalToConstant: size).isActive = true
+		imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
 		imageView.leadingAnchor.constraint(equalTo: borderView.leadingAnchor, constant: borderWidth).isActive = true
 		imageView.trailingAnchor.constraint(equalTo: borderView.trailingAnchor, constant: -borderWidth).isActive = true
 		imageView.topAnchor.constraint(equalTo: borderView.topAnchor, constant: borderWidth).isActive = true
 		imageView.bottomAnchor.constraint(equalTo: borderView.bottomAnchor, constant: -borderWidth).isActive = true
+		imageView.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -borderWidth).isActive = true
 
 		label.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor).isActive = true
 		label.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor).isActive = true
 		label.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+		// We allow the following constraints to be broken as needed to stop the auto layout system from chucking a
+		// tanty when the selector is contained within a table view cell.
+
+		let width = imageView.widthAnchor.constraint(equalToConstant: size)
+		width.priority = UILayoutPriority(rawValue: UILayoutPriority.required.rawValue - 10)
+		width.isActive = true
+
+		let spacing = borderView.bottomAnchor.constraint(equalTo: label.topAnchor, constant: -5)
+		spacing.priority = UILayoutPriority(rawValue: UILayoutPriority.required.rawValue - 10)
+		spacing.isActive = true
 	}
 
 	override func layoutSubviews() {

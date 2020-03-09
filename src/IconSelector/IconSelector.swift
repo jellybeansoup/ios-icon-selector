@@ -403,8 +403,11 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 				newConstraints.append(spacer.leadingAnchor.constraint(equalTo: containerView.layoutMarginsGuide.leadingAnchor))
 				newConstraints.append(spacer.topAnchor.constraint(equalTo: anchor))
 				newConstraints.append(spacer.widthAnchor.constraint(equalToConstant: 0))
-				newConstraints.append(spacer.heightAnchor.constraint(greaterThanOrEqualToConstant: minimumSpacing))
 				newConstraints.append(iconView.topAnchor.constraint(equalTo: spacer.bottomAnchor))
+
+				let spacerHeight = spacer.heightAnchor.constraint(greaterThanOrEqualToConstant: minimumSpacing)
+				spacerHeight.priority = UILayoutPriority(rawValue: UILayoutPriority.required.rawValue - 10)
+				newConstraints.append(spacerHeight)
 
 				if let spacerYDimension = spacerYDimension {
 					newConstraints.append(spacer.heightAnchor.constraint(equalTo: spacerYDimension))
