@@ -83,6 +83,10 @@ class IconView: UIView {
 		label.adjustsFontForContentSizeCategory = false
 		addSubview(label)
 
+		if #available(iOS 13.4, *) {
+			addInteraction(UIPointerInteraction(delegate: self))
+		}
+
 		prepareConstraints()
 		updateUnselectedBorder()
 	}
@@ -272,6 +276,15 @@ class IconView: UIView {
 			fatalError("init(coder:) has not been implemented")
 		}
 
+	}
+
+}
+
+@available(iOS 13.4, *)
+extension IconView: UIPointerInteractionDelegate {
+
+	func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+		return UIPointerStyle(effect: .lift(UITargetedPreview(view: borderView)))
 	}
 
 }

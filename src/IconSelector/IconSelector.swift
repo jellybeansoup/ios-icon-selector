@@ -297,6 +297,9 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 	override public func layoutSubviews() {
 		prepareIconViews()
 
+		scrollView.clipsToBounds = !adjustHeightToFitContent
+		scrollView.isScrollEnabled = !adjustHeightToFitContent
+
 		let width = bounds.size.width - (containerView.layoutMargins.left + containerView.layoutMargins.right)
 		minimumSpacing = iconSize / 3
 		iconsPerRow = max(1, Int(floor(width / (iconSize + minimumSpacing))))
