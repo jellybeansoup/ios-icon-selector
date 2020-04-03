@@ -284,6 +284,10 @@ class IconView: UIView {
 extension IconView: UIPointerInteractionDelegate {
 
 	func pointerInteraction(_ interaction: UIPointerInteraction, styleFor region: UIPointerRegion) -> UIPointerStyle? {
+		guard !isSelected else {
+			return nil
+		}
+
 		return UIPointerStyle(effect: .lift(UITargetedPreview(view: borderView)))
 	}
 
