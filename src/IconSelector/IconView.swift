@@ -83,7 +83,7 @@ class IconView: UIView {
 		label.adjustsFontForContentSizeCategory = false
 		addSubview(label)
 
-		if #available(iOS 13.4, *) {
+		if #available(iOS 13.4, *), NSClassFromString("UIPointerInteraction") != nil {
 			addInteraction(UIPointerInteraction(delegate: self))
 		}
 
