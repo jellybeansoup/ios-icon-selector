@@ -13,6 +13,7 @@
 		A18AD25021F8A1BA00F4359F /* IconSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18AD24F21F8A1BA00F4359F /* IconSelectorTests.swift */; };
 		A1CF09FF1DF8D65400D13E21 /* IconSelector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1A787381C7BED9C0095A0EF /* IconSelector.framework */; };
 		A1E666151C9793700005CE51 /* IconSelector.h in Headers */ = {isa = PBXBuildFile; fileRef = A1E666141C9793700005CE51 /* IconSelector.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A1FFE7A0243AA7AE00975B88 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1FFE79F243AA7AE00975B88 /* IconView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		A1CF09FA1DF8D65400D13E21 /* IconSelectorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IconSelectorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1CF09FE1DF8D65400D13E21 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1E666141C9793700005CE51 /* IconSelector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IconSelector.h; sourceTree = "<group>"; };
+		A1FFE79F243AA7AE00975B88 /* IconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		C961138B23DFD2A600B190E7 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,6 +93,7 @@
 				A1E666141C9793700005CE51 /* IconSelector.h */,
 				A18AD24A21F8A07000F4359F /* IconSelector.swift */,
 				A18AD24921F8A07000F4359F /* Icon.swift */,
+				A1FFE79F243AA7AE00975B88 /* IconView.swift */,
 				A18AD24B21F8A07000F4359F /* UIApplication.swift */,
 				A1A7873C1C7BED9C0095A0EF /* Info.plist */,
 			);
@@ -222,6 +225,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A18AD24E21F8A07000F4359F /* UIApplication.swift in Sources */,
+				A1FFE7A0243AA7AE00975B88 /* IconView.swift in Sources */,
 				A18AD24C21F8A07000F4359F /* Icon.swift in Sources */,
 				A18AD24D21F8A07000F4359F /* IconSelector.swift in Sources */,
 			);
