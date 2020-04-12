@@ -81,6 +81,8 @@ class IconView: UIView {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.allowsDefaultTighteningForTruncation = true
 		label.adjustsFontForContentSizeCategory = false
+		label.setContentHuggingPriority(.defaultHigh, for: .vertical)
+		label.setContentHuggingPriority(.defaultLow, for: .horizontal)
 		addSubview(label)
 
 		if #available(iOS 13.4, *), NSClassFromString("UIPointerInteraction") != nil {

@@ -88,6 +88,8 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 		scrollView.translatesAutoresizingMaskIntoConstraints = false
 		containerView.translatesAutoresizingMaskIntoConstraints = false
+		containerView.setContentHuggingPriority(.defaultHigh, for: .vertical)
+		containerView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
 		let viewsDictionary: [String: UIView] = ["rootView": self, "scrollView": scrollView, "containerView": containerView]
 		addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[scrollView]|", options: [], metrics: nil, views: viewsDictionary))
@@ -408,7 +410,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 				newConstraints.append(spacer.widthAnchor.constraint(equalToConstant: 0))
 				newConstraints.append(iconView.topAnchor.constraint(equalTo: spacer.bottomAnchor))
 
-				let spacerHeight = spacer.heightAnchor.constraint(greaterThanOrEqualToConstant: minimumSpacing)
+				let spacerHeight = spacer.heightAnchor.constraint(equalToConstant: minimumSpacing)
 				spacerHeight.priority = UILayoutPriority(rawValue: UILayoutPriority.required.rawValue - 10)
 				newConstraints.append(spacerHeight)
 
