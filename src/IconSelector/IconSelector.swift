@@ -38,7 +38,7 @@ public class IconSelector: UIControl, UIGestureRecognizerDelegate {
 
 	public let icons: [Icon]
 
-	private let scrollView = UIScrollView()
+	internal let scrollView = UIScrollView()
 
 	private let containerView = UIView()
 
