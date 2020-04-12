@@ -475,8 +475,11 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 			previousXAnchor = iconView.trailingAnchor
 
-			if let dimension = iconXDimension { // Match widths to first icon
+			if let dimension = iconXDimension, dimension != iconView.widthAnchor { // Match widths to first icon
 				newConstraints.append(iconView.widthAnchor.constraint(equalTo: dimension))
+			}
+			else if let first = iconViews.first, iconView != first {
+				newConstraints.append(iconView.widthAnchor.constraint(equalTo: first.widthAnchor))
 			}
 
 			if i == iconViews.count - 1 { // Last in array
