@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A168F66B243C8203005F25F0 /* IconSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A168F66A243C8203005F25F0 /* IconSelectorViewController.swift */; };
 		A18AD24C21F8A07000F4359F /* Icon.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18AD24921F8A07000F4359F /* Icon.swift */; };
 		A18AD24D21F8A07000F4359F /* IconSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18AD24A21F8A07000F4359F /* IconSelector.swift */; };
 		A18AD24E21F8A07000F4359F /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A18AD24B21F8A07000F4359F /* UIApplication.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		A137E74E1DF97AD700AF7BEB /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		A168F66A243C8203005F25F0 /* IconSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconSelectorViewController.swift; sourceTree = "<group>"; };
 		A171352E185008F400E56C4D /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A171352F185008F400E56C4D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A17135301850090C00E56C4D /* IconSelector.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = IconSelector.podspec; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			children = (
 				A1E666141C9793700005CE51 /* IconSelector.h */,
 				A18AD24A21F8A07000F4359F /* IconSelector.swift */,
+				A168F66A243C8203005F25F0 /* IconSelectorViewController.swift */,
 				A18AD24921F8A07000F4359F /* Icon.swift */,
 				A1FFE79F243AA7AE00975B88 /* IconView.swift */,
 				A18AD24B21F8A07000F4359F /* UIApplication.swift */,
@@ -227,6 +230,7 @@
 				A18AD24E21F8A07000F4359F /* UIApplication.swift in Sources */,
 				A1FFE7A0243AA7AE00975B88 /* IconView.swift in Sources */,
 				A18AD24C21F8A07000F4359F /* Icon.swift in Sources */,
+				A168F66B243C8203005F25F0 /* IconSelectorViewController.swift in Sources */,
 				A18AD24D21F8A07000F4359F /* IconSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
