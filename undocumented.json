@@ -23,42 +23,42 @@
     },
     {
       "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 125,
+      "line": 127,
       "symbol": "IconSelector.isEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 141,
+      "line": 143,
       "symbol": "IconSelector.layoutMargins",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 236,
+      "line": 238,
       "symbol": "IconSelector.gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 241,
+      "line": 243,
       "symbol": "IconSelector.scrollViewWillBeginDragging(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 297,
+      "line": 299,
       "symbol": "IconSelector.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 501,
+      "line": 503,
       "symbol": "IconSelector.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
