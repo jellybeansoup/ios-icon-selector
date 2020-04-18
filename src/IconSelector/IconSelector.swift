@@ -34,7 +34,7 @@ import UIKit
     - Use `addTarget(_:action:for:)` to enroll in updates for the
       `.valueChanged` event.
 */
-public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+public class IconSelector: UIControl, UIGestureRecognizerDelegate {
 
 	public let icons: [Icon]
 
@@ -98,7 +98,7 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 		scrollView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[containerView]|", options: [], metrics: nil, views: viewsDictionary))
 		scrollView.addConstraint(scrollView.widthAnchor.constraint(equalTo: containerView.widthAnchor))
 
-		scrollView.delegate = self
+		scrollView.panGestureRecognizer.addTarget(self, action: #selector(handlePreferredGestureRecognizer(_:)))
 		containerView.layoutMargins = .zero
 
 		gestureRecognizer.delaysTouchesBegan = true
@@ -109,7 +109,11 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 
 		prepareIconViews()
 	}
-	
+
+	public override func didMoveToSuperview() {
+		registerPreferredGestureRecognizers()
+	}
+
 	/// Gets the currently selected icon.
 	public var selectedIcon: Icon? {
 		didSet {
@@ -236,12 +240,50 @@ public class IconSelector: UIControl, UIScrollViewDelegate, UIGestureRecognizerD
 	}
 
 	public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+		guard let gestureRecognizers = scrollView.gestureRecognizers else {
+			return false
+		}
+
 		let gestureRecognizerType = type(of: otherGestureRecognizer)
-		return scrollView.gestureRecognizers?.contains { type(of: $0) == gestureRecognizerType } ?? false
+		return gestureRecognizers.lazy.map { type(of: $0) }.contains { $0 == gestureRecognizerType }
 	}
 
-	public func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-		gestureRecognizer.state = .failed
+	/// Gesture recognizers for which we want to cancel our custom gesture recognizer upon any of them becoming active.
+	/// This collection is used to remember and detach when the icon selector is moved to a different view hierarchy (in
+	/// `didMoveToSuperview()`).
+	/// - SeeAlso: `registerPreferredGestureRecognizers()`
+	private var preferredGestureRecognizers: [UIGestureRecognizer] = []
+
+	/// Travels up the view hierarchy and registers a target/action pair with any gesture recognisers that should
+	/// receive precedence over our internal gesture recogniser, causing it to be cancelled when they become active.
+	private func registerPreferredGestureRecognizers() {
+		preferredGestureRecognizers.forEach {
+			$0.removeTarget(self, action: #selector(handlePreferredGestureRecognizer(_:)))
+		}
+
+		preferredGestureRecognizers.removeAll()
+
+		for ancestor in sequence(first: self, next: { $0.superview }) {
+			guard let scrollView = ancestor as? UIScrollView else {
+				continue
+			}
+
+			scrollView.panGestureRecognizer.addTarget(self, action: #selector(handlePreferredGestureRecognizer(_:)))
+			preferredGestureRecognizers.append(scrollView.panGestureRecognizer)
+		}
+	}
+
+	/// Method added as a target/action pair on preferred gesture recognizers, which cancels our custom
+	/// `gestureRecogniser` if the preferred gesture's state is (or becomes) active.
+	/// - Parameter gestureRecognizer: The gesture recogniser calling the method; typically a `UIScrollView`'s
+	/// 	`panGestureRecognizer` that we want to avoid conflicting with.
+	@objc private func handlePreferredGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+		switch gestureRecognizer.state {
+		case .began, .changed:
+			self.gestureRecognizer.state = .cancelled
+
+		default: break
+		}
 	}
 
 	// MARK: Laying out content
