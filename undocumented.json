@@ -1,68 +1,68 @@
 {
   "warnings": [
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/Icon.swift",
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/Icon.swift",
       "line": 141,
       "symbol": "Icon.subscript(_:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/Icon.swift",
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/Icon.swift",
       "line": 158,
       "symbol": "Icon.subscript(_:)",
       "symbol_kind": "source.lang.swift.decl.function.subscript",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
       "line": 39,
       "symbol": "IconSelector.icons",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 127,
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
+      "line": 113,
+      "symbol": "IconSelector.didMoveToSuperview()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
+      "line": 131,
       "symbol": "IconSelector.isEnabled",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 143,
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
+      "line": 147,
       "symbol": "IconSelector.layoutMargins",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 238,
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
+      "line": 242,
       "symbol": "IconSelector.gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 243,
-      "symbol": "IconSelector.scrollViewWillBeginDragging(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 299,
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
+      "line": 341,
       "symbol": "IconSelector.layoutSubviews()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
-      "line": 503,
+      "file": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector/src/IconSelector/IconSelector.swift",
+      "line": 545,
       "symbol": "IconSelector.updateConstraints()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/runner/runners/2.168.0/work/ios-icon-selector/ios-icon-selector"
+  "source_directory": "/Users/runner/runners/2.169.0/work/ios-icon-selector/ios-icon-selector"
 }
