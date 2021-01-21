@@ -1,5 +1,5 @@
 //
-// Copyright © 2019 Daniel Farrelly & Curtis Herbert
+// Copyright © 2021 Daniel Farrelly & Curtis Herbert
 //
 // Redistribution and use in source and binary forms, with or without modification,
 // are permitted provided that the following conditions are met:
