@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "IconSelector"
-  s.version      = "0.1"
+  s.version      = "1.0"
   s.summary      = "A drop-in UI component to allow easy selection of alternate icons on iOS."
   s.homepage     = "https://github.com/jellybeansoup/ios-icon-selector"
   s.license      = { :type => 'BSD', :file => 'LICENSE' }
