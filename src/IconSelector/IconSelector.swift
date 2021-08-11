@@ -107,6 +107,11 @@ public class IconSelector: UIControl, UIGestureRecognizerDelegate {
 		gestureRecognizer.addTarget(self, action: #selector(handleGestureRecognizer(_:)))
 		containerView.addGestureRecognizer(gestureRecognizer)
 
+		// This is not ideal. The control should probably not initialize its own state, but in order to avoid a breaking
+		// change I feel like its probably best to allow this for the time being. At least by doing it this way, the
+		// value of the `selectedIcon` property is respected.
+		selectedIcon = UIApplication.shared.alternateIcon
+
 		prepareIconViews()
 	}
 
@@ -362,7 +367,7 @@ public class IconSelector: UIControl, UIGestureRecognizerDelegate {
 			let view = IconView(icon: icon, size: iconSize, borderWidth: selectionStrokeWidth)
 			view.unselectedStrokeColor = unselectedStrokeColor
 			view.shouldDisplayLabel = shouldDisplayLabels
-			view.isSelected = icon.isCurrent
+			view.isSelected = (selectedIcon == icon)
 			return view
 		}
 
