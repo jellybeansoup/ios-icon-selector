@@ -50,6 +50,7 @@ public struct Icon {
 	private weak var bundle: Bundle?
 	
 	/// Gets a flag indicating whether or not this is the currently selected icon
+	@available(iOSApplicationExtension, unavailable)
 	public var isCurrent: Bool {
 		let application = UIApplication.shared
 

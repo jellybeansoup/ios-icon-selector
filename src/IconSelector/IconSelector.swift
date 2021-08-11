@@ -24,16 +24,13 @@
 
 import UIKit
 
-/** A control that presents available icons and allows selection.
-
-	This control will **not** actually perform any updates
-    based on the user's selection. It is the responsibility
-	of the parent `UIViewController` to perform the update.
-    There are two methods to perform the actual updates.
-    - Read the `selectedIcon` upon the user indicating they're done
-    - Use `addTarget(_:action:for:)` to enroll in updates for the
-      `.valueChanged` event.
-*/
+/// A control that presents available icons and allows selection.
+///
+/// This control will **not** actually perform any updates based on the user's selection. It is the responsibility of
+/// the parent `UIViewController` to perform the update. There are two methods to perform the actual updates.
+/// - Read the `selectedIcon` upon the user indicating they're done.
+/// - Use `addTarget(_:action:for:)` to enroll in updates for the `.valueChanged` event.
+@available(iOSApplicationExtension, unavailable)
 public class IconSelector: UIControl, UIGestureRecognizerDelegate {
 
 	public let icons: [Icon]
