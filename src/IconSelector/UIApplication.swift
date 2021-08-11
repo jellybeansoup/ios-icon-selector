@@ -30,9 +30,7 @@ extension UIApplication {
 	/// Gets or sets an alternate icon to use
 	public var alternateIcon: Icon? {
 		get {
-			let application = UIApplication.shared
-
-			guard application.supportsAlternateIcons, let name = application.alternateIconName else {
+			guard supportsAlternateIcons, let name = alternateIconName else {
 				return Icon.default
 			}
 
@@ -48,13 +46,11 @@ extension UIApplication {
 	///   - icon: Icon to set; use `nil` to restore the default
 	///   - completionHandler: optional completion handler
 	public func setAlternateIcon(_ icon: Icon?, completionHandler: ((_ error: Swift.Error?) -> Void)? = nil) {
-		let application = UIApplication.shared
-
-		guard application.supportsAlternateIcons else {
+		guard supportsAlternateIcons else {
 			return
 		}
 
-		application.setAlternateIconName(icon?.name, completionHandler: completionHandler)
+		setAlternateIconName(icon?.name, completionHandler: completionHandler)
 	}
 
 }
