@@ -26,6 +26,7 @@ import UIKit
 
 /// A very simple view controller implementation of the `IconSelector`, which can be instantiated to display a custom
 /// collection of icons, or pull the complete list from a given bundle.
+@available(iOSApplicationExtension, unavailable)
 open class IconSelectorViewController: UITableViewController {
 
 	/// The icons displayed by the receiver.
