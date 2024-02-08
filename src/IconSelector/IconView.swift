@@ -68,14 +68,14 @@ class IconView: UIView {
 		borderView.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(borderView)
 
-		imageView.image = icon[size]
+		imageView.image = icon.displayImage
 		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleAspectFit
 		imageView.layer.masksToBounds = true
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		borderView.addSubview(imageView)
 
-		label.text = icon.localizedName ?? icon.name
+		label.text = icon.displayName
 		label.font = UIFont.systemFont(ofSize: labelFontSize(for: traitCollection.preferredContentSizeCategory))
 		label.textAlignment = .center
 		label.translatesAutoresizingMaskIntoConstraints = false
